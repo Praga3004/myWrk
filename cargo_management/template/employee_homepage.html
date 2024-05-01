@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9ecef;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        .content {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border: 2px solid #007bff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .content h2 {
+            color: #17a2b8;
+        }
+        .content a {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .content a:hover {
+            background-color: #0056b3;
+        }
+        .logout {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .logout a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .logout a:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Employee Homepage</h1>
+
+        <div class="content">
+            <h2>Add Transport Details</h2>
+            <a href="{% url 'add_transport' %}">Add Transport</a>
+            <a href="{% url 'transport_list' %}">View Transport List</a>
+        </div>
+
+        <div class="content">
+            <h2>Add Shipment Details</h2>
+            <a href="{% url 'add_shipment' %}">Add Shipment</a>
+            <a href="{% url 'shipment_list' %}">View Shipment List</a>
+        </div>
+
+        <div class="logout">
+            <a href="{% url 'admin_login' %}">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

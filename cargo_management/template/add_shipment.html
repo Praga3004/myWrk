@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Shipment</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        input[type="datetime-local"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Shipment</h1>
+    <form method="post" action="{% url 'add_shipment' %}">
+        {% csrf_token %}
+        <label for="type_of_transport">Type of Transport:</label>
+        <input type="text" name="type_of_transport" id="type_of_transport" required>
+
+        <label for="arrival_time">Arrival Time:</label>
+        <input type="datetime-local" name="arrival_time" id="arrival_time" required>
+
+        <label for="departure_time">Departure Time:</label>
+        <input type="datetime-local" name="departure_time" id="departure_time" required>
+
+        <label for="te_id">Transport ID:</label>
+        <select name="te_id" id="te_id" required>
+            <!-- Populate this dropdown with Transport IDs -->
+            {% for transport in transports %}
+            <option value="{{ transport.te_id }}">{{ transport.transport_license }}</option>
+        {% endfor %}
+        </select>
+        <br>
+        <br>
+        <br>
+
+        <button type="submit">Add Shipment</button>
+        <a href="{% url 'employee_homepage' %}">Go to Homepage</a>
+    </form>
+    
+    
+    <script>
+        // Get the arrival time and destination elements
+        var arrivalTimeInput = document.getElementById('arrival_time');
+        var destinationInput = document.getElementById('departure_time');
+
+        // Add event listener to update min value of arrival time when destination value changes
+        destinationInput.addEventListener('change', function() {
+            arrivalTimeInput.min = this.value;
+        });
+
+        // Get the departure time element
+        var departureTimeInput = document.getElementById('departure_time');
+
+        // Add event listener to update max value of destination when arrival time value changes
+        arrivalTimeInput.addEventListener('change', function() {
+            departureTimeInput.max = this.value;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9ecef;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        .content {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border: 2px solid #007bff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .content h2 {
+            color: #17a2b8;
+        }
+        .content a {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .content a:hover {
+            background-color: #0056b3;
+        }
+        .logout {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .logout a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .logout a:hover {
+            background-color: #c82333;
+        }
+        .employee-list {
+            margin-top: 20px;
+        }
+        .employee-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .employee-list th, .employee-list td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .employee-list th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script>
+        function updateSalary(e_id) {
+            var salary = document.getElementById('salary-' + e_id).value;
+            fetch("{% url 'update_salary' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ 'e_id': e_id, 'salary': salary })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Salary updated successfully!');
+                } else {
+                    alert('Failed to update salary.');
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Manager Homepage</h1>
+
+        <div class="content">
+            <h2>Employees</h2>
+            <div class="employee-list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Date Of Join</th>
+                            <th>Salary</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for employee in employees %}
+                        <tr>
+                            <td>{{ employee.e_id }}</td>
+                            <td>{{ employee.ename }}</td>
+                            <td>{{ employee.email }}</td>
+                            <td>{{ employee.dateofjoin }}</td>
+                            <td>
+                                <input type="number" id="salary-{{ employee.e_id }}" value="{{ employee.salary }}">
+                            </td>
+                            <td><button onclick="updateSalary('{{ employee.e_id }}')">Save</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>Add Cargo Details</h2>
+            <a href="{% url 'add_cargo' m_id %}">Add Cargo</a>
+            <a href="{% url 'cargo_list' m_id %}">View Cargo List</a>
+        </div>
+
+        <div class="content">
+            <h2>Add Warehouse Details</h2>
+            <a href="{% url 'add_warehouse' m_id %}">Add Warehouse</a>
+            <a href="{% url 'warehouse_list' m_id %}">View Warehouse List</a>
+        </div>
+
+        <div class="logout">
+            <a href="{% url 'admin_login' %}">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Homepage</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button-container button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Customer Homepage</h1>
+    <div class="button-container">
+        <button onclick="location.href = '/buyer/{{ cid }}'">Buyer</button>
+        <button onclick="location.href = '/seller/{{ cid }}'">Seller</button>
+    </div>
+    
+    <h2>Buys</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Cargo ID</th>
+                <th>Date</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for buy in customer_buys %}
+            <tr>
+                <td>{{ buy.order_id }}</td>
+                <td>{{ buy.cargo }}</td>
+                <td>{{ buy.date }}</td>
+                <td>{{ buy.amount }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Sells</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Sale ID</th>
+                <th>Cargo ID</th>
+                <th>Date</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sell in customer_seller %}
+            <tr>
+                <td>{{ sell.sale_id }}</td>
+                <td>{{ sell.cargo }}</td>
+                <td>{{ sell.date }}</td>
+                <td>{{ sell.amount }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="logout">
+        <a href="{% url 'admin_login' %}">Logout</a>
+    </div>
+</body>
+</html>

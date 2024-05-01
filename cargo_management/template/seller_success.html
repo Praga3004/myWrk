@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .success-box {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: .25rem;
+            padding: 1rem;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>Selled Success</h1>
+    <div class="success-box">
+        <p>Your cargo <strong>{{ cargo_description }}</strong> has been successfully Sold.</p>
+        <p>Date: {{ date }}</p>
+        <p>Amount: ${{ amount }}</p>
+        <a href="{% url 'customer_homepage' cid %}">Go to Homepage</a>
+    </div>
+</body>
+</html>

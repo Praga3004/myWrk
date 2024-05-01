@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargo List</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cargo List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Weight</th>
+                <th>Destination</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cargo in cargos %}
+            <tr>
+                <td>{{ cargo.description }}</td>
+                <td>{{ cargo.weights }}</td>
+                <td>{{ cargo.destination }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'manager_homepage' m_id %}">Go to Homepage</a>
+</body>
+</html>

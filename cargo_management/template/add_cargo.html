@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Cargo</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        input[type="datetime-local"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Cargo</h1>
+    <form method="post" action="{% url 'add_cargo' m_id %}">
+        {% csrf_token %}
+        <label for="description">Description:</label><br>
+        <input type="text" id="description" name="description" required><br>
+
+        <label for="weights">Weight:</label><br>
+        <input type="number" id="weights" name="weights" required><br>
+        <br>
+        <br>
+        <label for="destination">Destination:</label><br>
+        <input type="text" id="destination" name="destination" required><br>
+
+        <label for="sid">Shipment Options:</label><br>
+        <select id="sid" name="sid" required>
+            {% for shipment in shipments %}
+            <option value="{{ shipment.sid }}">{{ shipment.sid }}</option>
+            {% endfor %}
+        </select><br>
+        <br>
+        <br>
+        <button type="submit">Add Cargo</button>
+        <a href="{% url 'manager_homepage' m_id %}">Go to Homepage</a>
+
+    </form>
+    
+</body>
+</html>

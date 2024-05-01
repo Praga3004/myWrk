@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Warehouse</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Warehouse</h1>
+    <form id="warehouseForm" method="post" action="{% url 'add_warehouse' m_id %}">
+        {% csrf_token %}
+        <label for="car_id">Cargo ID:</label>
+        <select name="car_id" id="car_id">
+            <!-- Populate this dropdown with Cargo IDs -->
+            {% for cargo in cargos %}
+            <option value="{{ cargo.id }}">{{ cargo.id }}</option>
+        {% endfor %}
+        </select>
+        <br>
+        <label for="capacity">Capacity:</label>
+        <input type="number" name="capacity" id="capacity" required>
+        <br>
+        <label for="location">Location:</label>
+        <input type="text" name="location" id="location" required>
+        <br>
+        <label for="available_space">Available Space:</label>
+        <input type="number" name="available_space" id="available_space" required>
+        <br>
+        <button type="submit">Add Warehouse</button>
+        <div id="error-messages" class="error-message"></div>
+        <a href="{% url 'manager_homepage' m_id %}">Go to Homepage</a>
+    </form>
+
+    <script>
+        document.getElementById('warehouseForm').addEventListener('submit', function(event) {
+            var capacity = parseInt(document.getElementById('capacity').value);
+            var availableSpace = parseInt(document.getElementById('available_space').value);
+            var errorMessage = '';
+
+            if (capacity < availableSpace) {
+                errorMessage += 'Capacity must be greater than or equal to available space.\n';
+            }
+
+            if (availableSpace > capacity) {
+                errorMessage += 'Available space must be less than or equal to capacity.\n';
+            }
+
+            if (errorMessage) {
+                event.preventDefault();
+                document.getElementById('error-messages').textContent = errorMessage;
+            }
+        });
+    </script>
+    
+</body>
+</html>
